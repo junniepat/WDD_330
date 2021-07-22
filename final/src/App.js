@@ -1,18 +1,49 @@
 import {useState, useEffect} from 'react';
 import './App.css';
 import axios from "axios";
-import Quiz from './quiz';
+
 
 function App() {
-  const [count, setCount] = useState([]);
+  const [count, setCount] = useState(0);
   const [finished, setFinished] = useState(false);
   const [quiz, setQuiz] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [choice, setChoice] = useState([]);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
 
 
-  useEffect(() => {
-      var arr = JSON.parse(sessionStorage.getItem("answers"));
-      setCount(arr);
-  }, [finished])
+
+  function finshed() {
+    setFinished(true);
+    let correctAnswers = 0;
+    for(const answer in answers){
+      if(answers[answer] === quiz[+answer].correct_answer)
+        ++correctAnswers;
+    }
+
+    setCount(correctAnswers);
+  }
+
+function retry() {
+  setFinished(false);
+  sessionStorage.clear();
+}
+
+
+// let answers = JSON.parse(localStorage.getItem('answers')) || [];
+
+function selectAnswer(name, value){
+  if(!sessionStorage.hasOwnProperty('answers'))
+  sessionStorage.setItem('answers', JSON.stringify({}))
+
+  const ans = JSON.parse(sessionStorage.getItem('answers'));
+
+  ans[name]= value;
+  setAnswers(ans);
+  sessionStorage.setItem('answers',JSON.stringify(ans));
+}
+
+
 
 
   useEffect(() => {
@@ -26,6 +57,8 @@ function App() {
     })
   }, []);
 
+  
+
 
   return (
     <div className="App">
@@ -34,13 +67,13 @@ function App() {
       {finished ? 
 
       (<>
-      <h3>You got {count && count.length} questions right</h3>
+      <h3>You got {count} questions right</h3>
       <div className="card-stats">
         <sub>Score</sub>
-        <div>{count && count.length}</div>
+        <div>{count} / {quiz.length}</div>
       </div> 
 
-      <button onClick={() => setFinished(false)}>
+      <button onClick={() => retry()}>
         Retry
       </button>
       </>): (
@@ -51,10 +84,28 @@ function App() {
       </div>
 
       {quiz && quiz.map((item, index) => (
-        <Quiz key={index} index={index} question={item.question} correct={item.correct_answer} difficulty={item.difficulty} category={item.category} />
+         <div className="card" key={index}>
+         <div className="card-header">
+           <span className="card-difficulty"><b>Category:</b> {item.category}</span>
+           <span className="card-difficulty"><b>Difficulty:</b> {item.difficulty}</span>
+           <div dangerouslySetInnerHTML={{__html: item.question }} style={{ marginTop: "10px" }}></div>
+         </div>
+         <div className={"card-body"}>
+             <label>
+                 <input type="radio" name={''+index} value="True" onChange={(e) => selectAnswer(e.target.name, e.target.value)} />
+                 <span className="True">True</span>
+             </label>
+             <label>
+                 <input type="radio" name={''+index} value="False" onChange={(e) => selectAnswer(e.target.name, e.target.value)} />
+                 <span className="False">False</span>
+             </label>
+
+         </div>
+         
+       </div>
       ))}
 
-<button onClick={() => setFinished(true)}>
+<button onClick={() => finshed()}>
         Submit Quiz
       </button>
         </>

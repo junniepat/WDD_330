@@ -1,27 +1,18 @@
 import { useState, useEffect } from 'react';
 
 export default function Quiz(props){
-    const [choice, setChoice] = useState(false);
-    const [correct, setCorrect] = useState(false);
-    
+    const [choice, setChoice] = useState([]);
+    const [nanswers, setAnswer] = useState([]);
+
     const {category, difficulty, question, index} = props;
+    let answers = [];
 
+  function selectAnswer(name, value){
+    answers.push({name, value})
 
- function selectAnswer(choice) {
-    setChoice(choice);
-    sessionStorage.clear();
-    const answers = sessionStorage['answers'];
-    var arr = answers ? JSON.parse(answers) : [];
-    
-    console.log('arr', arr)
-    arr.push(index);
-    var newArr = arr;
-
-    if (choice === props.correct) {
-        setCorrect(true);
-        sessionStorage.setItem("answers", JSON.stringify(newArr));
-    }
- }
+    setAnswer((prevVals) => [...prevVals, answers])
+    localStorage.setItem('answers', JSON.stringify(nanswers))
+  }
 
 
     return (
@@ -34,11 +25,11 @@ export default function Quiz(props){
             </div>
             <div className={"card-body"}>
                 <label>
-                    <input type="radio" name={index} value="True" onChange={(e) => selectAnswer(e.target.value)} />
+                    <input type="radio" name={'Q_' + index} value="True" onChange={(e) => selectAnswer(e.target.name, e.target.value)} />
                     <span className="True">True</span>
                 </label>
                 <label>
-                    <input type="radio" name={index} value="False" onChange={(e) => selectAnswer(e.target.value)} />
+                    <input type="radio" name={'Q_' + index} value="False" onChange={(e) => selectAnswer(e.target.name, e.target.value)} />
                     <span className="False">False</span>
                 </label>
 
