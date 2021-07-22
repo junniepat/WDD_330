@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,600;0,700;1,100;1,200;1,400;1,500;1,700&display=swap');
+
+body, * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.card {
+  background: #fff;
+  width: 60%;
+  height: 300px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  margin: 1% 0;
+}
+
+.card:hover {
+  background: #f5f5f5;
+  box-shadow: 0 20px 25px -5px rgba(240, 226, 226, 0.1), 0 10px 10px -5px rgba(189, 187, 187, 0.04);
+  transition: .3s;
+}
+
+.card-header {
+  background: #FC3868;
+  padding: 10px;
+  min-height: 100px;
+  border-radius: 15px 15px 0 0;
+}
+
+.card-stats {
+  background: #FC3868;
+  padding: 10px;
+  min-height: 80px;
+  border-radius: 10px;
+  width: 10%;
+  float: left;
+}
+
+.card-stats sub {
+  font-size: 15px;
+}
+
+.card-stats div {
+  font-weight: bold;
+}
+
+.card-body {
+  text-align: center;
+  padding: 40px;
+}
+
+.card-options {
+  padding: 10px;
+  margin: 10px;
+  min-width: 80px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+
+.card-options:hover {
+  cursor: pointer;
+  border: 1px solid #FC3868;
+  background: #FC3868;
+  color: #fff;
+  transition: .3s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-difficulty {
+  background: #fff;
+  color: #282c34;
+  font-size: 15px;
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  min-width: 80px;
+  border: 2px solid #b8b8b8;
+  color: #282c34;
+  border-radius: 5px;
+}
+
+
+.card-body label {
+  cursor:pointer;
+}
+.card-body label input {
+  display:none;
+}
+.card-body label span {
+  padding: 10px 20px;
+  margin: 10px;
+  min-width: 80px;
+  border: 2px solid #b8b8b8;
+  color: #282c34;
+  border-radius: 5px;
+}
+
+.card-body label input:checked ~ span {
+  cursor: pointer;
+  border: 1px solid #FC3868;
+  background: #FC3868;
+  color: #fff;
+  transition: .3s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+

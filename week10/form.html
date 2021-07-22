@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="">
+<title>WDD 330 Assignments - Week 10 - Form Validation</title>
+
+<body>
+
+    <main>
+
+        <!-- <form> -->
+
+            <label>Enter Three Letters:</label>
+            <input type="text" id="letter" placeholder="one capital" minlength="3" pattern="[A-Za-z]{3}" 
+                title="Must have one capital letter" required>
+
+            <label>Enter Three numbers:</label>  
+            <input id="num" min="3" required>
+            
+            <button type="button" onclick="showMessage()">Submit</button>
+
+            <p id="message"></p>
+
+        <!-- </form> -->
+
+        <script src="form.js"></script>
+    </main>
+
+</body>
+
+</html>
