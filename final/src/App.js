@@ -8,16 +8,14 @@ function App() {
   const [finished, setFinished] = useState(false);
   const [quiz, setQuiz] = useState([]);
   const [answers, setAnswers] = useState([]);
-  const [choice, setChoice] = useState([]);
-  const [correctAnswers, setCorrectAnswers] = useState([]);
-
+  const [difficulty, setdifficulty] = useState('easy')
 
 
   function finshed() {
     setFinished(true);
     let correctAnswers = 0;
-    for(const answer in answers){
-      if(answers[answer] === quiz[+answer].correct_answer)
+    for(const index in answers){
+      if(answers[index] === quiz[+index].correct_answer)
         ++correctAnswers;
     }
 
@@ -47,15 +45,16 @@ function selectAnswer(name, value){
 
 
   useEffect(() => {
-    axios.get('https://opentdb.com/api.php?amount=15&type=boolean&difficulty=medium')
+    axios.get('https://opentdb.com/api.php?amount=15&type=boolean&difficulty='+ difficulty)
     .then(response => {
-      // console.log(response)
+      console.log(response)
       setQuiz(response.data.results)
     })
     .catch(error => {
       console.log(error);
     })
-  }, []);
+  }, [difficulty]);
+
 
   
 
@@ -70,7 +69,7 @@ function selectAnswer(name, value){
       <h3>You got {count} questions right</h3>
       <div className="card-stats">
         <sub>Score</sub>
-        <div>{count} / {quiz.length}</div>
+        <div>{count} out of {quiz.length}</div>
       </div> 
 
       <button onClick={() => retry()}>
@@ -78,9 +77,24 @@ function selectAnswer(name, value){
       </button>
       </>): (
         <>
-      <div className="card-stats">
-        <sub>Questions</sub>
-        <div>{quiz.length}</div>
+
+
+      <div className="card-Two">
+        <div className="card-stats">
+          <sub>Questions</sub>
+          <div>{quiz.length}</div>
+        </div>
+
+        <div className="card-stats">
+          <sub>Difficulty</sub>
+          <div>
+            <select onChange={(e) => setdifficulty(e.target.value)}>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       {quiz && quiz.map((item, index) => (
